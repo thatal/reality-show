@@ -12,5 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('admin.index');
+})->name('app.index');
+Route::group(['prefix' => 'system'],
+    function(){
+        Route::get('/', function () {
+            return view('admin.index');
+        })->name('admin.dashboard');
+        Route::get('login', function () {
+            return view('login');
+        })->name('admin.login');
+        Route::get('logout', function () {
+            return view('admin.index');
+        })->name('admin.logout');
+        Route::get('profile', function () {
+            return view('admin.index');
+        })->name('admin.profile');
+    }
+);
