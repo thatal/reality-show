@@ -12,10 +12,11 @@
             </ul>
           </li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="icon-user"></i> User Name <b class="caret"></b></a>
+                            class="icon-user"></i>@if(Auth::check()) {{Auth::user()->name}} @else User Name @endif<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{{route('admin.profile')}}">Profile</a></li>
-              <li><a href="{{route('admin.logout')}}">Logout</a></li>
+              {{-- <li><a href="{{route('admin.profile')}}">Profile</a></li> --}}
+              <li><a href="{{route('admin.change_pass')}}"><i class="icon-key"></i>  Change Password</a></li>
+              <li><a href="{{route('admin.logout')}}"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
           </li>
         </ul>

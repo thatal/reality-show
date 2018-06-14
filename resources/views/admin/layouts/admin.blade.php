@@ -5,6 +5,7 @@
 <title>Admin Dashboard - {{config('app.name')}} -  @yield('title')</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('css/bootstrap-responsive.min.css')}}" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
@@ -12,7 +13,32 @@
 <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link href="{{asset('css/pages/dashboard.css')}}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.css"/>
 @yield('css_page')
+<style>
+.fade.in{
+    opacity:0.9;
+}
+body {
+  position: relative;
+  min-height: 100%;
+  min-height: 100vh;
+}
+.main{
+    border-bottom:none;
+    margin-bottom:3px;
+}
+.footer {
+  position: absolute;
+  right: 0;bottom:0;left:0;
+  margin-top:3px;
+}
+.disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+</style>
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,71 +47,39 @@
 <body>
 @include('admin.include.top_nav')
 @include('admin.include.nav_bar')
-</div>
-<!-- /subnavbar -->
+
 <div class="main">
   <div class="main-inner">
+    @if(\Session::has('success'))
+        <div class="container">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong><i class="icon-ok"></i></strong>  {!!\Session::get('success')!!}
+            </div>
+        </div>
+    @endif
+    @if(\Session::has('error'))
+        <div class="container">
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong><i class="icon-warning-sign"></i></strong> {!!\Session::get('error')!!}
+            </div>
+        </div>
+    @endif
+    @if(\Session::has('warning'))
+        <div class="container">
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong><i class="icon-large icon-bolt"></i></strong> {!!\Session::get('warning')!!}
+            </div>
+        </div>
+    @endif
     @yield('content')
     <!-- /container --> 
   </div>
   <!-- /main-inner --> 
 </div>
 <!-- /main -->
-<div class="extra">
-  <div class="extra-inner">
-    <div class="container">
-      <div class="row">
-                    <div class="span3">
-                        <h4>
-                            About Free Admin Template</h4>
-                        <ul>
-                            <li><a href="javascript:;">EGrappler.com</a></li>
-                            <li><a href="javascript:;">Web Development Resources</a></li>
-                            <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                            <li><a href="javascript:;">Free Resources and Scripts</a></li>
-                        </ul>
-                    </div>
-                    <!-- /span3 -->
-                    <div class="span3">
-                        <h4>
-                            Support</h4>
-                        <ul>
-                            <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                            <li><a href="javascript:;">Ask a Question</a></li>
-                            <li><a href="javascript:;">Video Tutorial</a></li>
-                            <li><a href="javascript:;">Feedback</a></li>
-                        </ul>
-                    </div>
-                    <!-- /span3 -->
-                    <div class="span3">
-                        <h4>
-                            Something Legal</h4>
-                        <ul>
-                            <li><a href="javascript:;">Read License</a></li>
-                            <li><a href="javascript:;">Terms of Use</a></li>
-                            <li><a href="javascript:;">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                    <!-- /span3 -->
-                    <div class="span3">
-                        <h4>
-                            Open Source jQuery Plugins</h4>
-                        <ul>
-                            <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                            <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                            <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                            <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                        </ul>
-                    </div>
-                    <!-- /span3 -->
-                </div>
-      <!-- /row --> 
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /extra-inner --> 
-</div>
-<!-- /extra -->
 <div class="footer">
   <div class="footer-inner">
     <div class="container">
@@ -111,9 +105,23 @@
 <script language="javascript" type="text/javascript" src="{{asset('js/full-calendar/fullcalendar.min.js')}}"></script>
  
 <script src="{{asset('js/base.js')}}"></script> 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.js"></script>
+
 <script>
 $(document).ready(function(){
     $('.form-validator').validator();
+    var current_page_URL = location.href;
+    $("a").each(function() {
+        if ($(this).attr("href") !== "#") {
+            var target_URL = $(this).prop("href");
+            if (target_URL === current_page_URL) {
+                $('subnavbar a').parents('li, ul').parent('li').removeClass('active');
+                $(this).parent('li').addClass('active');
+                $(this).parent('li').parent('ul').parent('li').addClass('active');
+                return true;
+            }
+        }
+    });
 });
 </script>
 @yield('js_page')

@@ -3,10 +3,10 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="{{route('admin.dashboard')}}"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li><a href="{{route('admin.dashboard')}}"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
         <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-facetime-video"></i><span>Masters</span> <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="icons.html"><i class="icon-facetime-video"></i> Show Name</a></li>
+            <li><a href="{{route('admin.show.create')}}"><i class="icon-facetime-video"></i> Show Name</a></li>
             <li><a href="faq.html"><i class="icon-list-alt"></i> Rounds</a></li>
             <li><a href="pricing.html"><i class="icon-user"></i> Contestant</a></li>
             <li><a href="login.html"><i class="icon-bar-chart"></i> Results</a></li>
@@ -30,3 +30,5 @@
     <!-- /container --> 
   </div>
   <!-- /subnavbar-inner --> 
+</div>
+<!-- /subnavbar -->

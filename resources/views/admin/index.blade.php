@@ -5,7 +5,7 @@ Dashboard
 @section('content')
 <div class="container">
       <div class="row">
-        <div class="span6">
+        <div class="col-md-6">
           <div class="widget widget-nopad">
             <div class="widget-header"> <i class="icon-list-alt"></i>
               <h3> Today's Stats</h3>
@@ -124,8 +124,8 @@ Dashboard
           </div>
           <!-- /widget --> 
         </div>
-        <!-- /span6 -->
-        <div class="span6">
+        <!-- /col-md-6 -->
+        <div class="col-md-6">
           <div class="widget">
             <div class="widget-header"> <i class="icon-bookmark"></i>
               <h3>Important Shortcuts</h3>
@@ -238,7 +238,7 @@ Dashboard
           </div>
           <!-- /widget -->
         </div>
-        <!-- /span6 --> 
+        <!-- /col-md-6 --> 
       </div>
       <!-- /row --> 
     </div>
