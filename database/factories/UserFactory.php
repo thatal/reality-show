@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -21,5 +21,20 @@ $factory->define(App\User::class, function (Faker $faker) {
         'password' => bcrypt('ramdhenu'),
         'username' => $faker->unique()->userName,
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Models\ArtistMaster::class, function (Faker $faker) {
+    $gender = ['male', 'female','other'];
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'code' => rand(123456, 9999999),
+        // 'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'mobile' => rand(961234567, 999990000),
+        'gender' => $gender[rand(0,2)],
+        'age' => rand(18, 60),
+        'facebook' => "",
+        'instagram' => ""
     ];
 });

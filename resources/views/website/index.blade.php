@@ -17,8 +17,13 @@
     <link rel="stylesheet" href="{{asset('web-assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('web-assets/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('web-assets/css/sweetalert.css')}}">
+    <link rel="stylesheet" href="{{asset('web-assets/css/lity.min.css')}}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-   
+   <style type="text/css">
+       .lity{
+            z-index: 99999;
+       }
+   </style>
 </head>
 
 <body id="index-page">
@@ -69,20 +74,23 @@
   
     <div style="padding-top:120px; background-image:url({{asset('web-assets/img/bk.png')}})" class="contact" id="votes">
         <div class="container">
-            
+
             <div class="row">
+                <?php $today = date('d M Y');?>
+            @foreach($artistDetails->artist_on_round as $key => $round_artist)
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 wow fadeIn" data-wow-delay="0.1s">
                     <div style="background-color:#F4E772" class="blog-box">
-                        <div class="blog-img"> <img src="{{asset('web-assets/img/singer.png')}}" alt="image"> </div>
-                        <div class="blog-info"> <span>07 Jan 2018</span>
-                            <h4 style="color:#F60"><strong>Code-001</strong></h4>
-                            <p><strong class="cont-name">Zubeen Garg</strong></p>
-                            <p><a href=""><i style="font-size:24px" class="fas fa-video"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:24px" class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><i style="font-size:24px" class="fab fa-whatsapp-square"></i></a></p>
-                            <div class="blog-btn"> <a href="#" onClick="return VoteNow(this)" sun-data-id="12345607">Vote Now</a> </div>
+                        <div class="blog-img"> <img src="{{-- {{asset('web-assets/img/singer.png')}} --}}{{asset($artist_image_dir.$round_artist->artist_image)}}" alt="image"> </div>
+                        <div class="blog-info"> <span>{{$today}}</span>
+                            <h4 style="color:#F60"><strong>Code-{{$round_artist->artist->code}}</strong></h4>
+                            <p><strong class="cont-name">{{$round_artist->artist->name}}</strong></p>
+                            <p><a href="//www.youtube.com/watch?v={{$round_artist->youtube_id}}" data-lity><i style="font-size:24px" class="fas fa-video"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:24px" class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><i style="font-size:24px" class="fab fa-whatsapp-square"></i></a></p>
+                            <div class="blog-btn"> <a href="#" onClick="return VoteNow(this)" sun-data-id="{{$round_artist->artist->code}}">Vote Now</a> </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 wow fadeIn" data-wow-delay="0.1s">
+            @endforeach
+                {{-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 wow fadeIn" data-wow-delay="0.1s">
                     <div style="background-color:#A9FA83" class="blog-box">
                        <div class="blog-img"> <img src="{{asset('web-assets/img/singer1.png')}}" alt="image"> </div>
                         <div class="blog-info"> <span>07 Jan 2018</span>
@@ -116,7 +124,7 @@
                             <div class="blog-btn"> <a href="#" onClick="return VoteNow(this)" sun-data-id="12345607">Vote Now</a> </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 
                 
                 
@@ -164,7 +172,8 @@
     <script src="{{asset('web-assets/js/wow.min.js')}}"></script>
     <script src="{{asset('web-assets/js/main.js')}}"></script>
     <script src="{{asset('web-assets/js/sweetalert.min.js')}}"></script>
-    <script src="{{asset('web-assets/js/vote.js')}}"></script>
+    <script src="{{asset('web-assets/js/lity.min.js')}}"></script>
+    <script src="{{asset('web-assets/js/vote.js?v=1')}}"></script>
 </body>
 
 

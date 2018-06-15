@@ -14,7 +14,7 @@ class AdminController extends Controller
     }
     public function index()
     {
-        return view('admin.index');
+        return view('admin.ace_index');
     }
     public function login(Request $request) {
         $remember = false;

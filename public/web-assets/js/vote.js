@@ -78,6 +78,14 @@ EnterMobile = function(voteID, ajaxUrl, value = null){
                             imageUrl:'web-assets/sad-emo.png'
                         });
                         break;
+                    case 'voting-expire':
+                        swal({
+                            title:"Sorry!", 
+                            text: data.message, 
+                            // type:"error",
+                            imageUrl:'web-assets/sad-emo.png'
+                        });
+                        break;
                     default:
                         swal("Sorry!", "Unable to understand", "warning");
                         break
@@ -92,8 +100,8 @@ EnterMobile = function(voteID, ajaxUrl, value = null){
 }
 EnterOTP = function(voteID, mobileNO, ajaxUrl, otpMsg = null){
     var msg = "Enter the OTP:";
-    if(otpMsg !== null){
-        $msg = otpMsg;
+    if(otpMsg != null){
+        msg = otpMsg;
     }
     swal({
         title: "OTP Verification",
@@ -113,17 +121,24 @@ EnterOTP = function(voteID, mobileNO, ajaxUrl, otpMsg = null){
             // });
             setTimeout(function () {
                 // alert("otp resent to your mobile.");
-                swal({
-                    title: "OTP",
-                    text: "OTP Successfully Resent to your mobile",
-                    type: "info",
-                    confirmButtonClass: "btn-info",
-                    closeOnConfirm: false,
-                },function(){
-                    setTimeout(function () {
-                        EnterOTP(voteID, mobileNO, ajaxUrl);
-                    }, 1000);
-                })
+                // ajax calling again with mobile and voter id
+                $.post(ajaxUrl,{'id':voteID, 'mobile': mobileNO})
+                .done(function(data){
+                    console.log(data.type);
+                    swal({
+                        title: "OTP",
+                        text: "OTP Successfully Resent to your mobile",
+                        type: "info",
+                        confirmButtonClass: "btn-info",
+                        closeOnConfirm: false,
+                    },function(){
+                        setTimeout(function () {
+                            EnterOTP(voteID, mobileNO, ajaxUrl);
+                        }, 1000);
+                    })
+                }).fail(function(){
+                    swal("Oops!!", "Something went wrong", "error");
+                });
             },2000);
         }else{
             inputValue = inputValue.trim();
@@ -134,7 +149,7 @@ EnterOTP = function(voteID, mobileNO, ajaxUrl, otpMsg = null){
             console.log(typeof(inputValue))
             setTimeout(function () {
                 // swal("Nice!", "You wrote: " + inputValue, "success");
-                $.post(ajaxUrl,{'id':voteID, 'mobile': inputValue, 'otp':inputValue})
+                $.post(ajaxUrl,{'id':voteID, 'mobile': mobileNO, 'otp':inputValue})
                 .done(function(data){
                     console.log(data.type);
                     switch (data.type){
@@ -142,7 +157,7 @@ EnterOTP = function(voteID, mobileNO, ajaxUrl, otpMsg = null){
                             swal("Thanks!", "Voting Success", "success");
                             break; 
                         case 'otp-error':
-                            EnterOTP(voteID, inputValue, ajaxUrl);
+                            EnterOTP(voteID, mobileNO, ajaxUrl,'Please enter Correct OTP');
                             // return false
                             // swal("Opps!", data.message, "warning");
                             break;
@@ -156,6 +171,14 @@ EnterOTP = function(voteID, mobileNO, ajaxUrl, otpMsg = null){
                             swal({
                                 title:"Sorry!", 
                                 text:"Voting Time Expired.", 
+                                // type:"error",
+                                imageUrl:'web-assets/sad-emo.png'
+                            });
+                            break;
+                        case 'voting-expire':
+                            swal({
+                                title:"Sorry!", 
+                                text: data.message, 
                                 // type:"error",
                                 imageUrl:'web-assets/sad-emo.png'
                             });
