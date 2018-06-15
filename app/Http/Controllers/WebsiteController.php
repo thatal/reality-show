@@ -71,7 +71,7 @@ class WebsiteController extends Controller
             $voter = VoterMaster::where('mobile', $req->get('mobile'))->first();
             if (!sizeof($voter)) {
                 // If user is not register with us.
-                $otp = rand(1523476, 9864123);
+                $otp = rand(1523, 9864);
                 $voterData = [
                     'mobile'                    => $req->get('mobile'),
                     'otp'                       => $otp,
@@ -120,7 +120,7 @@ class WebsiteController extends Controller
                     }else{
                         // if user is register and sent without OTP
                         // Then send again new otp
-                        $otp = rand(1523476, 9864123);
+                        $otp = rand(1523, 9864);
                         $sms = "Your OTP is ".$otp." . Thank for Voting";
                         $voter->otp_sent_date = $current_time;
                         $voter->otp           = $otp;
