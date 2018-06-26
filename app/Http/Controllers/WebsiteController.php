@@ -13,8 +13,8 @@ class WebsiteController extends Controller
     }
     public function index() {
         $artist_image_dir = 'web-assets/artist/';
-        $artistDetails    = ShowRound::with('artist_on_round','artist_on_round.artist')->where('status', '=', ShowRound::$active)->first();
-        // dump($artistDetails);
+        $artistDetails    = ShowRound::with('artist_on_round_active','artist_on_round_active.artist_active')->where('status', '=', ShowRound::$active)->first();
+        // dd($artistDetails);
         return view('website.index', compact('artistDetails', 'artist_image_dir'));
     }
     public function votePost(Request $req)
@@ -71,7 +71,7 @@ class WebsiteController extends Controller
             $voter = VoterMaster::where('mobile', $req->get('mobile'))->first();
             if (!sizeof($voter)) {
                 // If user is not register with us.
-                $otp = rand(1523, 9864);
+                $otp = rand(1258, 9864);
                 $voterData = [
                     'mobile'                    => $req->get('mobile'),
                     'otp'                       => $otp,
@@ -120,7 +120,7 @@ class WebsiteController extends Controller
                     }else{
                         // if user is register and sent without OTP
                         // Then send again new otp
-                        $otp = rand(1523, 9864);
+                        $otp = rand(1258, 9864);
                         $sms = "Your OTP is ".$otp." . Thank for Voting";
                         $voter->otp_sent_date = $current_time;
                         $voter->otp           = $otp;

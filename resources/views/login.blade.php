@@ -13,7 +13,7 @@
 <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('css/pages/signin.css')}}" rel="stylesheet" type="text/css"></head><body>
 	
-	<div class="navbar navbar-fixed-top">
+	{{-- <div class="navbar navbar-fixed-top">
 	
 	<div class="navbar-inner">
 		
@@ -32,13 +32,6 @@
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					
-					{{-- <li class="">						
-						<a href="signup.html" class="">
-							Don't have an account?
-						</a>
-						
-					</li> --}}
-					
 					<li class="">						
 						<a href="{{route('app.index')}}" class="">
 							<i class="icon-chevron-left"></i>
@@ -54,7 +47,8 @@
 		
 	</div> <!-- /navbar-inner -->
 	
-</div> <!-- /navbar --><div class="account-container">
+</div> <!-- /navbar --> --}}
+<div class="account-container">
 	
 	<div class="content clearfix">
 		

@@ -17,13 +17,13 @@ class CreateArtistMastersTable extends Migration
             $table->increments('id');
             $table->string('code', 100);
             $table->string('name', 150);
-            $table->string('mobile', 150);
-            $table->string('email', 150);
-            $table->string('facebook', 150);
-            $table->string('instagram', 150);
+            $table->string('mobile', 150)->nullable();
+            $table->string('email', 150)->nullable();
+            $table->string('facebook', 150)->nullable();
+            $table->string('instagram', 150)->nullable();
             $table->enum('status', ['active','not_active'])->default('active');
             $table->enum('gender', ['male','female','other']);
-            $table->integer('age');
+            $table->integer('age')->nullable();
             $table->timestamps();
         });
     }

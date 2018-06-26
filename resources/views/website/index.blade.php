@@ -77,18 +77,20 @@
 
             <div class="row">
                 <?php $today = date('d M Y');?>
-            @foreach($artistDetails->artist_on_round as $key => $round_artist)
+            @foreach($artistDetails->artist_on_round_active as $key => $round_artist)
+                @if(sizeof($round_artist->artist_active))
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 wow fadeIn" data-wow-delay="0.1s">
                     <div style="background-color:#F4E772" class="blog-box">
                         <div class="blog-img"> <img src="{{-- {{asset('web-assets/img/singer.png')}} --}}{{asset($artist_image_dir.$round_artist->artist_image)}}" alt="image"> </div>
                         <div class="blog-info"> <span>{{$today}}</span>
-                            <h4 style="color:#F60"><strong>Code-{{$round_artist->artist->code}}</strong></h4>
-                            <p><strong class="cont-name">{{$round_artist->artist->name}}</strong></p>
+                            <h4 style="color:#F60"><strong>Code-{{$round_artist->artist_active->code}}</strong></h4>
+                            <p><strong class="cont-name">{{$round_artist->artist_active->name}}</strong></p>
                             <p><a href="//www.youtube.com/watch?v={{$round_artist->youtube_id}}" data-lity><i style="font-size:24px" class="fas fa-video"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:24px" class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><i style="font-size:24px" class="fab fa-whatsapp-square"></i></a></p>
-                            <div class="blog-btn"> <a href="#" onClick="return VoteNow(this)" sun-data-id="{{$round_artist->artist->code}}">Vote Now</a> </div>
+                            <div class="blog-btn"> <a href="#" onClick="return VoteNow(this)" sun-data-id="{{$round_artist->artist_active->code}}">Vote Now</a> </div>
                         </div>
                     </div>
                 </div>
+                @endif
             @endforeach
                 {{-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 wow fadeIn" data-wow-delay="0.1s">
                     <div style="background-color:#A9FA83" class="blog-box">

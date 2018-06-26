@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator, Redirect, Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\ShowRound;
+use App\Models\VoterTransaction;
 
 class AdminController extends Controller
 {
@@ -14,7 +16,16 @@ class AdminController extends Controller
     }
     public function index()
     {
-        return view('admin.ace_index');
+        $userWiseVote = ShowRound::with('artist_on_round_active', 'artist_on_round_active.artist', 'artist_on_round_active.votes')->where('status',ShowRound::$active)->first();
+        // $userWiseVote= VoterTransaction::with('round','voter')->first();
+        // foreach($userWiseVote->artist_on_round as $key => $val){
+        //     foreach($val->artist as $perVote){
+        //         // dump($perVote);
+        //     }
+        // }
+        $artist_image_dir = url('web-assets/artist')."/";
+
+        return view('admin.dashboard')->with(compact('userWiseVote','artist_image_dir'));
     }
     public function login(Request $request) {
         $remember = false;
@@ -27,8 +38,7 @@ class AdminController extends Controller
         ];
         $validate = Validator::make($request->all(), $rule);
         if($validate->fails()){
-            die("Validation failed.");
-            // return Redirect::back()->withErrors($validate)->withInput()->with('alert_message', "Username or Password doesnot match.");
+            return Redirect::back()->withErrors($validate)->withInput()->with('alert_message', "Username or Password doesnot match.");
         }
 
         $credentials = $request->only('username', 'password');

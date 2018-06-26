@@ -46,13 +46,13 @@
                                         Change Password
                                     </a>
                                 </li>
-
+{{-- 
                                 <li>
                                     <a href="profile.html">
                                         <i class="ace-icon fa fa-user"></i>
                                         Profile
                                     </a>
-                                </li>
+                                </li> --}}
 
                                 <li class="divider"></li>
 

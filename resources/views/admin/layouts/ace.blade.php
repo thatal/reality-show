@@ -25,6 +25,11 @@
         <![endif]-->
         <link rel="stylesheet" href="{!!asset('assets/css/ace-skins.min.css')!!}" />
         <link rel="stylesheet" href="{!!asset('assets/css/ace-rtl.min.css')!!}" />
+        <link rel="stylesheet" href="{{asset('web-assets/css/sweetalert.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css')}}" />
+        <link rel="stylesheet" href="{{asset('assets/css/chosen.min.css')}}" />
+
+
 
         <!--[if lte IE 9]>
           <link rel="stylesheet" href="{!!asset('assets/css/ace-ie.min.css')!!}" />
@@ -114,6 +119,22 @@
         <script src="{!!asset('assets/js/ace-elements.min.js')!!}"></script>
         <script src="{!!asset('assets/js/ace.min.js')!!}"></script>
         <script src="{!!asset('assets/js/validator/validator.js')!!}"></script>
+        <script src="{{asset('web-assets/js/sweetalert.min.js')}}"></script>
+        <script src="{{asset('assets/js/moment.min.js')}}"></script>
+
+        <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery.dataTables.bootstrap.min.js')}}"></script>
+        {{-- <script src="{{asset('assets/js/dataTables.buttons.min.js')}}"></script>
+        <script src="{{asset('assets/js/buttons.flash.min.js')}}"></script>
+        <script src="{{asset('assets/js/buttons.html5.min.js')}}"></script>
+        <script src="{{asset('assets/js/buttons.print.min.js')}}"></script>
+        <script src="{{asset('assets/js/buttons.colVis.min.js')}}"></script>
+        <script src="{{asset('assets/js/dataTables.select.min.js')}}"></script> --}}
+        <script src="{{asset('assets/js/chosen.jquery.min.js')}}"></script>
+
+
+
 
         <!-- inline scripts related to this page -->
         <script type="text/javascript">
@@ -181,19 +202,154 @@
                     },
                     'delay' : 500
                 });
-                // $(".data_table").dataTable({
-                //    "sPaginationType": "full_numbers",
-                //    "bPaginate": false,
-                //    "bLengthChange": false,
-                //    "bFilter": true,
-                //    "bInfo": false,
-                //    "bAutoWidth": false,
+                $('.datetimepicker').datetimepicker({
+                 format: 'YYYY-MM-DD h:mm a',//use this option to display seconds
+                 icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-arrows ',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                 }
+                }).next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+                $('.datePicker').datetimepicker({
+                    format: 'YYYY-MM-DD',//use this option to display seconds
+                    icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    // today: 'fa fa-arrows ',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                 }
+                }).next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+                $(".data_table").dataTable({
+                    "sPaginationType": "full_numbers",
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": false,
+                    "bAutoWidth": false,
 
-                //    aoColumnDefs: [{
-                //        bSortable: false,
-                //        aTargets: [0, -1]
-                //    }]
+                    aoColumnDefs: [{
+                       bSortable: false,
+                       aTargets: [0, -1]
+                    }]
+                });
+                var myTable =
+                $(".data_table1").DataTable({
+                    "sPaginationType": "full_numbers",
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+
+                    aoColumnDefs: [{
+                       bSortable: false,
+                       aTargets: [0]
+                    }]
+                });
+                // $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+                
+                // new $.fn.dataTable.Buttons( myTable, {
+                //     buttons: [
+                //       {
+                //         "extend": "colvis",
+                //         "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                //         "className": "btn btn-white btn-primary btn-bold",
+                //         columns: ':not(:first):not(:last)'
+                //       },
+                //       {
+                //         "extend": "copy",
+                //         "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                //         "className": "btn btn-white btn-primary btn-bold"
+                //       },
+                //       {
+                //         "extend": "csv",
+                //         "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+                //         "className": "btn btn-white btn-primary btn-bold"
+                //       },
+                //       {
+                //         "extend": "excel",
+                //         "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                //         "className": "btn btn-white btn-primary btn-bold"
+                //       },
+                //       {
+                //         "extend": "pdf",
+                //         "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                //         "className": "btn btn-white btn-primary btn-bold"
+                //       },
+                //       {
+                //         "extend": "print",
+                //         "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                //         "className": "btn btn-white btn-primary btn-bold",
+                //         autoPrint: false,
+                //         message: ''
+                //       }       
+                //     ]
+                // } );
+                // myTable.buttons().container().appendTo( $('.tableTools-container') );
+                
+                // //style the message box
+                // var defaultCopyAction = myTable.button(1).action();
+                // myTable.button(1).action(function (e, dt, button, config) {
+                //     defaultCopyAction(e, dt, button, config);
+                //     $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
                 // });
+                
+                
+                // var defaultColvisAction = myTable.button(0).action();
+                // myTable.button(0).action(function (e, dt, button, config) {
+                    
+                //     defaultColvisAction(e, dt, button, config);
+                    
+                    
+                //     if($('.dt-button-collection > .dropdown-menu').length == 0) {
+                //         $('.dt-button-collection')
+                //         .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                //         .find('a').attr('href', '#').wrap("<li />")
+                //     }
+                //     $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+                // });
+                $('.chosen-select').chosen({allow_single_deselect:true}); 
+                    //resize the chosen on window resize
+            
+                $(window)
+                .off('resize.chosen')
+                .on('resize.chosen', function() {
+                    $('.chosen-select').each(function() {
+                         var $this = $(this);
+                         $this.next().css({'width': $this.parent().width()});
+                    })
+                }).trigger('resize.chosen');
+                $('.form-validator').validator();
+                var current_page_URL = location.href;
+                $("a").each(function() {
+                    if ($(this).attr("href") !== "#") {
+                        var target_URL = $(this).prop("href");
+                        if (target_URL === current_page_URL) {
+                            $('subnavbar a').parents('li, ul').parent('li').removeClass('active');
+                            $(this).parent('li').addClass('active');
+                            $(this).parent('li').parent('ul').parent('li').addClass('active');
+                            return true;
+                        }
+                    }
+                });
+                $(document).ready(function(){
+                    $('[data-toggle="tooltip"]').tooltip(); 
+                });
             });
         </script>
         @yield('js_page')
